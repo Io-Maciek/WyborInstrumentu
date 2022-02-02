@@ -1,0 +1,166 @@
+knowledge base nazwa
+ 
+ sources
+        instrumenty:
+                   type kb
+                   file "Instrumenty.bw";  
+ end;
+                      
+ control
+        run;
+        solutionWin(no);
+        delNewFacts;
+        
+        int DIAL, RET,InnyInstrument,Nuty;
+        char BudSTR,Glosnosc,SH;
+        double Bud;
+        InnyInstrument:=0;
+        Nuty:=0;
+        SH:="Wybór instrumentu";
+           
+        dlgCreate(DIAL,"","okno1.dlg");
+        
+        /////////////////
+        dlgBindEdit(DIAL,"entryBudzet",BudSTR);
+        dlgBindCheckBox(DIAL, "boxInstrument",InnyInstrument); 
+        dlgBindCheckBox(DIAL, "boxNuty",Nuty);
+        dlgBindListBox(DIAL,"listGlos",_,Glosnosc);
+        //dlgBindButton(DIAL,"btnNext1",next1) ;
+        //////////////// 
+                       
+        dlgExecute(DIAL,RET);
+        
+        
+        
+        ////////////////////////////////////////
+        
+        
+        if(RET==1)
+        begin
+            closeWindow("Wybór instrumentu");
+                    
+                    
+            int Dial, Ret,Makijaz,Problemy;
+            char Wielkosc;
+            
+            dlgCreate(Dial,"","okno2.dlg");
+            
+            dlgBindCheckBox(Dial, "boxMakijaz",Makijaz);
+            dlgBindCheckBox(Dial, "boxSerce",Problemy);
+            dlgBindListBox(Dial, "listSize",_,Wielkosc);
+            
+            dlgExecute(Dial,Ret);
+
+
+
+             if(Ret==1)
+             begin
+                  closeWindow("Wybór instrumentu - predyspozycje");
+             
+                  int Dial3,Ret3,N,S,W;
+             
+                  N:=0;
+                  S:=0;
+                  W:=0;
+             
+                  dlgCreate(Dial3,"","okno3.dlg");
+            
+                  dlgBindCheckBox(Dial3, "boxNiskie",N);
+                  dlgBindCheckBox(Dial3, "boxSrodek",S);
+                  dlgBindCheckBox(Dial3, "boxWysokie",W);
+            
+                  dlgExecute(Dial3,Ret3);
+               
+                  if(Ret3==1)
+                  begin
+               
+                  ston(BudSTR,Bud);
+                  
+             
+             
+                  addFact(_,inny_instrument,InnyInstrument);
+                  addFact(_,nuty,Nuty);
+                  addFact(_,budzet,Bud);
+                  addFact(_,glosnosc,Glosnosc);
+             
+             
+                  addFact(_,makijaz,Makijaz);
+                  addFact(_,problemy,Problemy);
+                  addFact(_,wielkoœæ,Wielkosc);
+             
+                  char Skala;
+                  Skala:="";
+             
+             
+             
+                  if(N==1)
+                  begin
+                       addFact(_,skalaNiska,1);
+                       strcat(Skala,"niskie, ");
+                  end else
+                  begin
+                       addFact(_,skalaNiska,0);
+                  end;
+                  
+                  if(S==1)
+                  begin
+                       addFact(_,skalaCentralna,1);
+                       strcat(Skala,"œrodkowe, ");
+                  end else
+                  begin
+                       addFact(_,skalaCentralna,0);
+                  end;
+                  
+                  if(W==1)
+                  begin
+                       addFact(_,skalaWysoka,1);
+                       strcat(Skala,"wysokie, ");
+                  end else
+                  begin
+                       addFact(_,skalaWysoka,0);
+                  end;
+            
+             solve(instrumenty,"instrument=X");
+             goal("instrument=X");
+             char ROZWIAZANIA[10];
+             int ILOSC,I;
+             saveSolution(ROZWIAZANIA, ILOSC);
+             
+             closeSheet(SH);
+             openSheet(SH,"model.vts");
+                  
+             setSheetValue(SH,"",3,5,Bud);
+             setSheetValue(SH,"",4,5,Nuty);
+             setSheetValue(SH,"",5,5,InnyInstrument);
+             setSheetValue(SH,"",6,5,Glosnosc);
+             
+             setSheetValue(SH,"",7,5,Makijaz);
+             setSheetValue(SH,"",8,5,Problemy);
+             setSheetValue(SH,"",9,5,Wielkosc);
+             setSheetValue(SH,"",10,5,Skala);
+             
+             setSheetValue(SH,"",12,5,ILOSC);
+             int Temp;
+             
+             for I:=0 to ILOSC step 1
+             begin
+
+                  //splitOAV(ROZWIAZANIA[I], OB, ATR, WAR );
+                  Temp:=13+I;
+                  setSheetValue(SH,"",Temp,3,ROZWIAZANIA[I]);
+             end;
+             
+             I:=I-1;
+             for I:=I to 10 step 1
+             begin
+                  Temp:=13+I;
+                  setSheetValue(SH,"",Temp,3,"");
+             end; 
+             
+             
+             showSheet(SH, 0);  
+                  end;
+              end;
+        end;
+ end;
+end;

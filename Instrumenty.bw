@@ -1,0 +1,197 @@
+knowledge source instrumenty
+ facets
+          instrument;
+          
+          // inny instrument oznacza pewien poziom wprawy i zaawansowania
+          inny_instrument: single yes;
+          budzet: single yes;
+          nuty: single yes;
+          glosnosc: single yes
+                    val oneof {"cichy","g³oœny"};
+          problemy: single yes;
+          makijaz: single yes;
+          wielkoœæ: single yes
+                    val oneof{"ma³y","du¿y"};
+                    
+          skalaNiska: single yes;
+          skalaCentralna: single yes;
+          skalaWysoka: single yes;
+       
+ end;
+ rules
+      25:instrument="tr¹bka" if
+                             budzet>999,
+                             (inny_instrument=1 | nuty=1),
+                             wielkoœæ="ma³y";
+                                                                                                                                          
+                                                         
+ 
+      24:instrument="wiolonczela" if
+                                  budzet>3999,
+                                  nuty=1,
+                                  inny_instrument=1,
+                                  makijaz=0,
+                                  wielkoœæ="du¿y";
+                                                                                                                                  
+ 
+      23:instrument="skrzypce" if
+                               budzet>1999,
+                               (inny_instrument=1 | nuty=1),
+                               makijaz=0,
+                               wielkoœæ="ma³y",
+                               (skalaWysoka=1 | skalaCentralna=1);
+                               
+                               
+ 
+      22:instrument="perkusja" if
+                              budzet>999,
+                              glosnosc="g³oœny",
+                              problemy=0,
+                              makijaz=0,
+                              wielkoœæ="du¿y";
+                              
+                               
+ 
+      21:instrument="klarnet" if
+                              budzet>2399,
+                              nuty=1,
+                              inny_instrument=1,
+                              glosnosc="cichy",
+                              problemy=0,
+                              wielkoœæ="ma³y",
+                              (skalaCentralna=1 | skalaWysoka=1);
+                              
+                              
+ 
+      20:instrument="waltornia" if
+                                budzet>5000,
+                                inny_instrument=1,
+                                nuty=1,
+                                glosnosc="cichy",
+                                wielkoœæ="ma³y",
+                                (skalaNiska=1 | skalaCentralna=1);
+ 
+      19:instrument="tuba" if
+                           budzet>4500,
+                           inny_instrument=1,
+                           nuty=1,
+                           problemy=0,
+                           skalaNiska=1,
+                           wielkoœæ="du¿y";
+ 
+      18:instrument="saksofon" if
+                               budzet>4000,
+                               problemy=0,
+                               wielkoœæ="ma³y",
+                               (skalaWysoka=1 | skalaCentralna=1);
+ 
+      17:instrument="czelesta" if
+                               budzet>20000,
+                               skalaWysoka=1,
+                               wielkoœæ="du¿y";
+ 
+      16:instrument="akordeon" if
+                              budzet>2200,
+                              glosnosc="g³oœny",
+                              wielkoœæ="ma³y",
+                              (skalaNiska=1 | skalaCentralna=1);
+ 
+      15:instrument="organy" if
+                             budzet>11000,
+                             nuty=1,
+                             glosnosc="g³oœny",
+                             wielkoœæ="du¿y",
+                             inny_instrument=1;
+                             
+ 
+      14:instrument="trójk¹t" if
+                              inny_instrument=0,
+                              budzet>5,
+                              budzet<50,
+                              wielkoœæ="ma³y";
+                              
+      13:instrument="kalimba" if
+                              inny_instrument=0,
+                              budzet>40,
+                              glosnosc="cichy",
+                              wielkoœæ="ma³y",
+                              skalaCentralna=1,
+                              makijaz=0;
+ 
+      1:instrument="keyboard" if
+                       inny_instrument=0,                           
+                       budzet > 300,
+                       glosnosc = "cichy";
+                       
+      2:instrument="pianino" if
+                       budzet > 1650,
+                       wielkoœæ="du¿y";
+                       
+       3:instrument="fortepian" if
+                       budzet > 10000,
+                       glosnosc = "g³oœny",
+                       wielkoœæ="du¿y";
+                       
+                                                                    
+       4:instrument="ukulele" if
+                       budzet > 250.0,
+                       glosnosc = "cichy",
+                       makijaz=0,
+                       wielkoœæ="ma³y",
+                       (skalaNiska=1 | skalaCentralna=1);
+                       
+       5:instrument="ukulele koncertowe" if
+                       budzet > 350.50,
+                       glosnosc = "g³oœny",
+                       makijaz=0,
+                       wielkoœæ="ma³y",
+                       (skalaNiska=1 | skalaCentralna=1);               
+                       
+      6:instrument="ukulele basowe" if
+                          budzet > 1450,
+                          inny_instrument=1,
+                          nuty=1,
+                          makijaz=0,
+                          wielkoœæ="ma³y",
+                          skalaNiska=1;
+                                              
+       7:instrument="gitara" if
+                           budzet > 880,
+                           glosnosc = "g³oœny",
+                           makijaz=0;
+                           
+       8:instrument="gitara elektryczna" if
+                           nuty=1,
+                           inny_instrument=1,
+                           budzet > 2000,
+                           glosnosc = "g³oœny",
+                           makijaz=0;
+                           
+                           
+       9:instrument="harfa" if
+                           budzet > 6000,
+                           glosnosc = "cichy",
+                           makijaz=0,
+                           wielkoœæ="du¿y",
+                           skalaCentralna=1;
+                       
+       10:instrument="flet piccolo"if
+                            budzet>1999,
+                            glosnosc = "g³oœny",                                                            
+                            problemy=0,
+                            wielkoœæ="ma³y",
+                            skalaWysoka=1;
+                            
+       11:instrument="melodyka"if
+                            budzet>100,
+                            inny_instrument=0,                                                            
+                            problemy=0,
+                            wielkoœæ="ma³y";
+                            
+       12:instrument="dzwonki"if
+                            budzet>30, budzet<100, 
+                            wielkoœæ="ma³y",
+                            glosnosc="cichy";
+                                                      
+ end;                      
+end;
